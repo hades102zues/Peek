@@ -30,8 +30,8 @@ const event = () => {
 		  	</p>
 		   <div className={styles.BotLine}></div>
  			
- 		   <span>Date</span>
- 		   		<Button floatType="" />
+ 		   <h5>Someday 12, 2018</h5>
+ 		   	<Button name="View"/>
  		   
        </div>
 

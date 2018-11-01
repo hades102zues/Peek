@@ -8,9 +8,11 @@ const eventViewer = () =>{
       <div className={styles.EventViewer}>
           
          <Event />
-         <p>Event</p>
-         <p>Event</p>
-         <p>Event</p>
+         <Event />
+         <Event />
+         <Event />
+         <Event />
+         <Event />
       </div>
 	);
 };
