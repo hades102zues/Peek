@@ -1,0 +1,8 @@
+.EventViewer{
+    /*centers the event viewer within the <Container />*/
+	width:85%;
+	margin:0 auto;
+	margin-top:50px;
+	/*border:1px solid red;*/
+
+}

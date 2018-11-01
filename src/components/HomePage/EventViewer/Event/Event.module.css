@@ -1,0 +1,49 @@
+.Event{
+	border-radius:5px;
+	background-color: white;
+	border:1px solid black;
+	width: 65%;
+
+}
+.EventContainer{
+	width:94%;
+	overflow:hidden;
+	margin:0 auto;
+}
+
+.Event h5{
+	display: inline-block;
+	margin-left: 4%;
+	color:#547490;
+	margin-top: 10px;
+}
+
+.TopLine{
+	border:1px solid #F0F0FF;
+	width:30%;
+
+}
+.Aid {
+/*	border:1px solid blue; */
+	width:60%;
+	margin-top: 15px;
+	margin-bottom:15px;
+}
+.Aid h3{
+    display: inline-block;
+    box-sizing: border-box;
+    margin-left:5%;
+    position: relative;
+    bottom:15px;
+
+    /*previous solution
+    vertical-align: top;
+    margin-top:3%;
+    */
+}
+
+.BotLine{
+	border:1px solid #F0F0FF;
+	width:100%;
+	margin-top:15px;
+}

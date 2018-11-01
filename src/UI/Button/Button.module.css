@@ -1,0 +1,15 @@
+.Button{
+	display: inline-block;
+	background-color: #41d6cf;
+	border: none;
+	height:5vh;
+	width:12%;
+	cursor:pointer;
+}
+
+.Right{
+	float:right;
+}
+.Left{
+	float:left;
+}

@@ -1,0 +1,7 @@
+.ProfilePic{
+	display:inline-block;
+	height:48px;
+	width:48px;
+	border-radius: 50%;
+	cursor:pointer;
+}

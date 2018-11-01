@@ -1,0 +1,13 @@
+.NavigationItems{
+	float:right;
+}
+.NavigationItems ul{
+	list-style: none;
+	padding:0;
+	margin:0;
+	box-sizing:border-box;
+}
+.NavigationItems li{
+   padding:0;
+   margin:0 20px 0 0;
+}
