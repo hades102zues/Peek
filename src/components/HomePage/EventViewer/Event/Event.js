@@ -58,19 +58,14 @@ class Event extends Component{
 				     <div className={styles.TopLine}></div>
 
 				     <div className={styles.Aid} >   
-					 	<ProfilePic /> 
+					 	<ProfilePic storyId={details.id} /> 
 					 	<h3>{details.title}</h3>
 				     </div>
-				  	<p>
-				  	 Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-				  	 sed do eiusmod tempor incididunt ut labore et dolore magna 
-				  	 aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco 
-				  	 laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor.
-				  	</p>
+				  
 				   <div className={styles.BotLine}></div>
 		 			<h5>date</h5>
 		 		   
-		 		   	<Button name="View"/>
+		 		   	<a href={details.url}><Button name="View"/></a>
 		 		   
 		       </div>
 
