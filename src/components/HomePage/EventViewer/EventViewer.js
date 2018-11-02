@@ -11,8 +11,7 @@ const eventViewer = () =>{
          <Event />
          <Event />
          <Event />
-         <Event />
-         <Event />
+
       </div>
 	);
 };

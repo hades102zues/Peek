@@ -1,6 +1,12 @@
+/*centers the event viewer within the <Container />*/
 .EventViewer{
-    /*centers the event viewer within the <Container />*/
 	width:85%;
-	margin:0 auto;
+	/*margin:0 auto;*/
 	margin-top:50px;
+}
+
+@media all and (max-width:450px){
+	.EventViewer{
+		margin:50px auto 0 auto;
+	}
 }
