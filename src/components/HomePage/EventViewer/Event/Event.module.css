@@ -26,15 +26,14 @@
 
 }
 .Aid {
-/*	border:1px solid blue; */
-	width:60%;
+	width:100%;
 	margin-top: 15px;
 	margin-bottom:15px;
 }
 .Aid h3{
     display: inline-block;
     box-sizing: border-box;
-    margin-left:5%;
+    margin-left:2%;
     position: relative;
     bottom:15px;
 
