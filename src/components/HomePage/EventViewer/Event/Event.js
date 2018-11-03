@@ -29,7 +29,7 @@ class Event extends Component{
      //get the data from the server 
 		 axios.get(url)
 			 .then((response)=>{
-			 	console.log(response.data);
+			 	//.log(response.data);
 			 	//save the story object inside the details state
 			 	this.setState({details:response.data, loaded:true});
 			 })
@@ -41,7 +41,12 @@ class Event extends Component{
   render(){
     
   	//we know that we will not get our data on the first render
-    let loadedEvent = <h1></h1>;
+    let loadedEvent = ( 
+    	  <div className={styles.Event}>
+    		<h1>Loading....</h1>
+    	  </div>
+
+    	);
 
     	//once we do get out data..
         if (this.state.loaded){
@@ -54,10 +59,13 @@ class Event extends Component{
 		        <div className={styles.EventContainer}>
 		       	  
 		       	     <h5>{details.by}</h5>
-				     <Closer />
+				     <Closer 
+				         clicked={this.props.closerClicked}
+				         storyId={this.props.storyId}
+                     />
 				     <div className={styles.TopLine}></div>
 
-				     <ProfilePic storyId={details.id} />
+				     <ProfilePic  storyId={details.id} />
 				     <div className={styles.Aid} >   
 					 	 
 					 	<h3>{details.title}</h3>
@@ -66,7 +74,12 @@ class Event extends Component{
 				   <div className={styles.BotLine}></div>
 		 			<h5>date</h5>
 		 		   
-		 		   	<a href={details.url} target="_blank"><Button name="View"/></a>
+		 		   	<a href={details.url} 
+		 		   	   target="_blank"
+		 		   	   rel="noopener noreferrer"
+		 		   	>
+		 		   	  <Button name="View"/>
+		 		   	</a>
 		 		   	<Button name="Add" color="#44a28a"/>
 		 		   
 		 		   

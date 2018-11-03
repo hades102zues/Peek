@@ -32,12 +32,25 @@ class EventViewer extends Component{
 		 .catch((error)=>console.log(error))
 	 ;
   }
+   
+   //parameter is the Id of a specific story
+   onCloserClickedHandler = (storyId) =>{
+       //copy the state into a new array and filter out the incoming storyId
+      const currentStoryIds = [...this.state.storyIds]
+                        .filter((id)=>(
+                            storyId!==id
+                        ));
+      this.setState({storyIds : currentStoryIds});
+  }
 
   render(){
   	const storyIds = [...this.state.storyIds];
 
     const events = storyIds.map( id =>(
-    	<Event key={id} storyId={id}/>
+    	<Event key={id} 
+            storyId={id} 
+            closerClicked = {this.onCloserClickedHandler}
+      />
     ));
 
 
