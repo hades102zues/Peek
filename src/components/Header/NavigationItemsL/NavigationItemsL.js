@@ -11,7 +11,7 @@ const navigationItemsL = () => (
 
    <nav className={styles.NavigationItemsL}>
      <ul>
-         <NavigationItem>Events</NavigationItem>
+         <NavigationItem>Home</NavigationItem>
      </ul>
    </nav>
 	

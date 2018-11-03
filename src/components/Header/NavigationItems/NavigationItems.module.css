@@ -1,5 +1,6 @@
 .NavigationItems{
-	float:right;
+	width:100%;
+	text-align: center;
 }
 .NavigationItems ul{
 	list-style: none;

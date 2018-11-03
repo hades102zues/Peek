@@ -12,7 +12,7 @@ const header = () => {
 	return (
 		<header className={styles.Header}>
 			<Container>
-				<NavigationItemsL/>
+				
 				<NavigationItems/>
 			</Container>
 				

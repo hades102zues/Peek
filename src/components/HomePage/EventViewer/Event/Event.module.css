@@ -4,7 +4,8 @@
 	border:1px solid #f8f9fa;
 	width: 70%;
 	margin:0 auto 35px auto;
-	background-color: #F4F7F8;
+	background-color: #fafafa;
+	/*box-shadow:3px 4px 25px #263238 ;*/
 
 }
 .EventContainer{
@@ -20,21 +21,23 @@
 	margin-top: 10px;
 }
 
+
+
 .TopLine{
 	border:1px solid #F0F0FF;
 	width:30%;
 
 }
 .Aid {
-/*	border:1px solid blue; */
-	width:60%;
+	width:100%;
 	margin-top: 15px;
 	margin-bottom:15px;
 }
 .Aid h3{
-    display: inline-block;
+    display: block;
     box-sizing: border-box;
-    margin-left:5%;
+    margin-left:2%;
+    margin-top: 15px;
     position: relative;
     bottom:15px;
 
@@ -42,6 +45,13 @@
     vertical-align: top;
     margin-top:3%;
     */
+}
+
+.Event img{
+	display:block;
+ margin:0 auto 20px auto;
+  padding-bottom:10px;
+
 }
 
 .BotLine{
@@ -81,6 +91,11 @@
 	.EventContainer button {
 		margin-right:20px;
 		width:50px;
+	}
+	.Aid img{
+		display: block;
+		margin:0 auto 10px auto;
+
 	}
 }
 

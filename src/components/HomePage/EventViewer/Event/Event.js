@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{ Component } from 'react';
 import styles from './Event.module.css';
 
 /*Components*/
@@ -6,41 +6,96 @@ import Closer from '../../../../UI/Closer/Closer';
 import ProfilePic from '../../../ProfilePic/ProfilePic';
 import Button from '../../../../UI/Button/Button';
 
+/*data fetchers*/
+import axios from '../../../../axios_instance/axios.js';
 
-const event = () => {
 
+class Event extends Component{
+ 
+    constructor(props){
+    	super(props);
+    	this.state={
+    		details:{}, //houses the info from the server
+    		loaded:false //specifies that the data came back
+    	};
+    }
 
- return (
-    <div className={styles.Event}>
-       <div className={styles.EventContainer}>
+ 	componentDidMount(){
+     //convert story id to a string
+	   const idString = this.props.storyId.toString();
+     //create the url
+	   const url = `item/${idString}/.json`;
 
-       	  <h5>Employee Title /$/</h5>
-		  <Closer />
-		  <div className={styles.TopLine}></div>
+     //get the data from the server 
+		 axios.get(url)
+			 .then((response)=>{
+			 	//.log(response.data);
+			 	//save the story object inside the details state
+			 	this.setState({details:response.data, loaded:true});
+			 })
+			 //come back
+			 .catch((error)=>{});
+		 ;
+ 	}
+ 
+  render(){
+    
+  	//we know that we will not get our data on the first render
+    let loadedEvent = ( 
+    	  <div className={styles.Event}>
+    		<h1>Loading....</h1>
+    	  </div>
 
-		  <div className={styles.Aid} >   
-		 	<ProfilePic /> 
-		 	<h3>New Take on RestAPIs</h3>
-		  </div>
-		  	<p>
-		  	 Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-		  	 sed do eiusmod tempor incididunt ut labore et dolore magna 
-		  	 aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco 
-		  	 laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor.
-		  	</p>
-		   <div className={styles.BotLine}></div>
- 			
- 		   <h5>Someday 12, 2018</h5>
- 		   	<Button name="View"/>
- 		   
-       </div>
+    	);
 
-	</div>
+    	//once we do get out data..
+        if (this.state.loaded){
 
- );
+        	const details = {...this.state.details};
+  	        //console.log(details);
+
+        	loadedEvent= (
+        	<div className={styles.Event}>
+		        <div className={styles.EventContainer}>
+		       	  
+		       	     <h5>{details.by}</h5>
+				     <Closer 
+				         clicked={this.props.closerClicked}
+				         storyId={this.props.storyId}
+                     />
+				     <div className={styles.TopLine}></div>
+
+				     <ProfilePic  storyId={details.id} />
+				     <div className={styles.Aid} >   
+					 	 
+					 	<h3>{details.title}</h3>
+				     </div>
+				  
+				   <div className={styles.BotLine}></div>
+		 			<h5>date</h5>
+		 		   
+		 		   	<a href={details.url} 
+		 		   	   target="_blank"
+		 		   	   rel="noopener noreferrer"
+		 		   	>
+		 		   	  <Button name="View"/>
+		 		   	</a>
+		 		   	<Button name="Add" color="#44a28a"/>
+		 		   
+		 		   
+		       </div>
+
+			</div>
+        	);
+
+        }
+
+	  return loadedEvent
+
+  }
 		
-};
+}
 
 
-export default event;
+export default Event;
 
