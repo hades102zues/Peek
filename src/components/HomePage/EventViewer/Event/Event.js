@@ -57,15 +57,18 @@ class Event extends Component{
 				     <Closer />
 				     <div className={styles.TopLine}></div>
 
+				     <ProfilePic storyId={details.id} />
 				     <div className={styles.Aid} >   
-					 	<ProfilePic storyId={details.id} /> 
+					 	 
 					 	<h3>{details.title}</h3>
 				     </div>
 				  
 				   <div className={styles.BotLine}></div>
 		 			<h5>date</h5>
 		 		   
-		 		   	<a href={details.url}><Button name="View"/></a>
+		 		   	<a href={details.url} target="_blank"><Button name="View"/></a>
+		 		   	<Button name="Add" color="#44a28a"/>
+		 		   
 		 		   
 		       </div>
 

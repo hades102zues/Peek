@@ -6,7 +6,8 @@ const navigationItem = (props) =>(
 	  style={{
 	  	display: 'inline-block',
 	    fontSize:'20px',
-	    fontWeight: 'bold'
+	    fontWeight: 'bold',
+	    
 	  }}
 	>
 	  {props.children}
