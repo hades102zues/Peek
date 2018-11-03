@@ -1,2 +1,2 @@
 # Peek
-An Event viewer app
+A Hacker News curator
