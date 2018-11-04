@@ -12,7 +12,9 @@ class EventViewer extends Component{
   constructor(props){
   	super(props);
   	this.state={
-  		storyIds:[]
+  		storyIds:[],  //contains all story ids retrieved from sever
+      eventDetails:[], //holds the title and id of each event within a {}
+      matchingTerms:[] // contains a list of event ids that might correspond to some event the user is looking for
   	};
   }
   
@@ -43,21 +45,164 @@ class EventViewer extends Component{
       this.setState({storyIds : currentStoryIds});
   }
 
+  //stores event details
+  eventDetailsStorer = (details) =>{
+   let eventDetails = [...this.state.eventDetails]; //copy the state
+        eventDetails.push(details); //add the details
+ 
+    this.setState({eventDetails}); //update the state
+  }
+
+
+  //determines if an element exists in an array
+   isElementInArray = (ele, arr ) =>{
+      let isElementFound = false;
+
+      arr.forEach( arrEle =>{
+          if(ele===arrEle)
+            isElementFound = true;
+
+      });
+
+      return isElementFound;
+   }
+
+
+    
+   //this function compares the contents of two array to determine
+   //if they are equal
+
+   isArraysTheSame = (currentMatchingTermsArr) =>{
+
+
+      const stateArr = [...this.state.matchingTerms];
+
+      //this specifies if all terms in the state can be found in the 
+      //list of possible matching terms
+
+      let isAllElementsFound= true;
+
+      if(stateArr.length<1)//not even possible for state to match
+        return false; 
+
+     stateArr.forEach(ele => {
+      //if some element is not found then the arrays are not the same
+          if(!this.isElementInArray(ele, currentMatchingTermsArr)){
+             isAllElementsFound = false;
+          }
+      });
+
+      
+      return isAllElementsFound ;
+   }
+
+
+
+
+  //this function determines which events might match the user's input
+  //by checking if the entered value is a substring of some event title 
+  //and then stores a list of event ids which satify this criteria
+
+  matchFinder = () =>{
+    const eventDetails = [...this.state.eventDetails];
+
+
+    const matchingTerms = eventDetails.reduce((incre, detail)=>{
+        
+        //get the title in lower case
+        const titleInLowerCase = detail.title.toLowerCase();
+        
+        //check if the search input is a substring of the above
+        if(titleInLowerCase.includes(this.props.searchInput.toLowerCase())){
+          incre.push(detail.id);
+          return incre;
+
+        }
+        else
+          return incre;
+        
+
+      }, []
+    );
+
+   
+    
+    // console.log('matchingTerms', matchingTerms);
+    // console.log('currentTerms in state', this.state.matchingTerms);
+    // console.log('are arrays same:', this.isArraysTheSame(matchingTerms));
+    
+    if(this.props.didUserBackspace){
+      // console.log('updating cause user backspace');
+      this.props.userBackspaceReset();
+      this.setState({matchingTerms});
+      return;
+    }
+
+    //if user enters new search term or did then update
+    if(!this.isArraysTheSame(matchingTerms)){
+      // console.log('STATE UPDATED');
+       this.setState({matchingTerms});
+       // console.log('backspace', this.props.didUserBackspace );
+     }
+        
+
+  }
+
+  //this is necessary to prevent the app from going into an infinite loop
+  //since we updating state within componentDidUpdate
+  //if the matchingTerms are not the same then we should update state
+
+
+  componentDidUpdate(){
+    if(this.props.isUserSearching){
+      this.matchFinder();
+    }
+    
+  }
+
+
   render(){
   	const storyIds = [...this.state.storyIds];
+    const matchingTerms = [...this.state.matchingTerms];
+    let finalOutput =  null; //this is what will be rendered
 
-    const events = storyIds.map( id =>(
-    	<Event key={id} 
-            storyId={id} 
-            closerClicked = {this.onCloserClickedHandler}
-      />
+    //creates all the components from the ids received from server
+    let events = storyIds.map( id =>(
+            <Event key={id} 
+                  storyId={id} 
+                  closerClicked = {this.onCloserClickedHandler}
+                  getDetails = {this.eventDetailsStorer}
+            />
     ));
+
+
+  
+    //this ensures that only those events that are relevant to search
+    //criteria are displayed
+
+    if(matchingTerms.length>=1){//if the user is searching
+    
+        finalOutput = events.reduce( (incre, eventComponent) => {
+           
+            //check if the component's id is one of the terms in 
+            //the matchingTerm's list of ids and if so add it to the new list
+            if( this.isElementInArray(eventComponent.props.storyId, matchingTerms)){
+               incre.push(eventComponent);
+               return incre;
+            }
+            else //otherwise don't touch the list and carry on to the next item
+              return incre;
+         }, []);
+    }
+    
+    else //Otherwise simply display all events
+      finalOutput = [...events];
 
 
   	return (
       <div className={styles.EventViewer}>
           
-         {events}
+         {finalOutput}
 
       </div>
 	);
