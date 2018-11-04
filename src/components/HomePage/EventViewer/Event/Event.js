@@ -31,6 +31,7 @@ class Event extends Component{
 			 .then((response)=>{
 			 	//.log(response.data);
 			 	//save the story object inside the details state
+			 	console.log('updating details');
 			 	this.props.getDetails({
 			 		id: response.data.id,
 			 		title: response.data.title

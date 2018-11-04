@@ -12,10 +12,13 @@ class EventViewer extends Component{
   constructor(props){
   	super(props);
   	this.state={
+      totalIdsExpecting: 20,//total number of ids app will generate from
   		storyIds:[],  //contains all story ids retrieved from sever
       eventDetails:[], //holds the title and id of each event within a {}
+      totalEventDeatilsGot: 0, //counts the total amount of id-titles upon app initiation
       matchingTerms:[] // contains a list of event ids that might correspond to some event the user is looking for
-  	};
+  	  
+    };
   }
   
 
@@ -28,7 +31,7 @@ class EventViewer extends Component{
 	axios.get('/newstories.json')
 	      //gets the id list and store it
 		 .then((response)=>{
-		 	idList=response.data.slice(0,19);//total of 20 ids
+		 	idList=response.data.slice(0, this.state.totalIdsExpecting);//total of 20 ids
 		 	this.setState({storyIds:idList});
 		 })
 		 .catch((error)=>console.log(error))
@@ -47,11 +50,17 @@ class EventViewer extends Component{
 
   //stores event details
   eventDetailsStorer = (details) =>{
-   let eventDetails = [...this.state.eventDetails]; //copy the state
-        eventDetails.push(details); //add the details
- 
-    this.setState({eventDetails}); //update the state
-  }
+
+   if(this.state.totalEventDeatilsGot!==this.state.totalIdsExpecting){
+       let eventDetails = [...this.state.eventDetails]; //copy the state
+            eventDetails.push(details); //add the details
+
+       let totalEventDeatilsGot = this.state.totalEventDeatilsGot;
+       totalEventDeatilsGot++;
+     
+        this.setState({eventDetails, totalEventDeatilsGot}); //update the state
+      }
+   }
 
 
   //determines if an element exists in an array
@@ -72,10 +81,7 @@ class EventViewer extends Component{
    //this function compares the contents of two array to determine
    //if they are equal
 
-   isArraysTheSame = (currentMatchingTermsArr) =>{
-
-
-      const stateArr = [...this.state.matchingTerms];
+   isArraysTheSame = (currentMatchingTermsArr, stateArr) =>{
 
       //this specifies if all terms in the state can be found in the 
       //list of possible matching terms
@@ -105,7 +111,7 @@ class EventViewer extends Component{
 
   matchFinder = () =>{
     const eventDetails = [...this.state.eventDetails];
-
+    const stateArr = [...this.state.matchingTerms];
 
     const matchingTerms = eventDetails.reduce((incre, detail)=>{
         
@@ -139,12 +145,14 @@ class EventViewer extends Component{
     }
 
     //if user enters new search term or did then update
-    if(!this.isArraysTheSame(matchingTerms)){
+    if(!this.isArraysTheSame(matchingTerms, stateArr)){
       // console.log('STATE UPDATED');
        this.setState({matchingTerms});
        // console.log('backspace', this.props.didUserBackspace );
      }
-        
+
+     // console.log('Completed search so going true');
+     this.props.searchingCompletedReseter();
 
   }
 
@@ -154,13 +162,13 @@ class EventViewer extends Component{
 
 
   componentDidUpdate(){
-    if(this.props.isUserSearching){
+    if(this.props.isUserSearching && !this.props.searchingCompleted){
       this.matchFinder();
     }
     
   }
 
-
+  
   render(){
   	const storyIds = [...this.state.storyIds];
     const matchingTerms = [...this.state.matchingTerms];
@@ -175,8 +183,8 @@ class EventViewer extends Component{
             />
     ));
 
+    console.log('render', this.state.totalEventDeatilsGot);
 
-  
     //this ensures that only those events that are relevant to search
     //criteria are displayed
 
