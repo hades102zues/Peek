@@ -183,7 +183,7 @@ class EventViewer extends Component{
             />
     ));
 
-    console.log('render', this.state.totalEventDeatilsGot);
+    //console.log('render', this.state.totalEventDeatilsGot);
 
     //this ensures that only those events that are relevant to search
     //criteria are displayed
