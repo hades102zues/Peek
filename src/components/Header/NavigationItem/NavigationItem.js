@@ -1,17 +1,16 @@
 import React from 'react';
-
+import { NavLink } from 'react-router-dom';
+import styles from './NavigationItem.module.css';
 
 const navigationItem = (props) =>(
-	<li 
-	  style={{
-	  	display: 'inline-block',
-	    fontSize:'20px',
-	    fontWeight: 'bold',
-	    
-	  }}
-	>
-	  {props.children}
-	 </li>
+	<li	className={styles.Li}>
+	  <NavLink to={props.to}  
+	    activeClassName={styles.Active}
+	    exact 
+	  >
+	    {props.children}
+	  </NavLink>
+	</li>
 );
 
 export default navigationItem;

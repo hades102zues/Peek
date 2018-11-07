@@ -1,0 +1,18 @@
+.InitalWidth{
+	width:100%;
+}
+
+.Input{
+	display:block;
+	width:80%;
+	margin:0 auto;
+	border:1px solid #ccc;
+	margin-bottom: 15px;
+	height: 7vh;
+	padding-left: 10px;
+	font-size: 20px;
+}
+
+.Input:focus {
+	background-color: #ccc;
+}

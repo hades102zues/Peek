@@ -9,8 +9,8 @@ const navigationItems = () => (
 
    <nav className={styles.NavigationItems}>
      <ul>
-         <NavigationItem>Home</NavigationItem>
-         <NavigationItem>Login/SignUp</NavigationItem>
+         <NavigationItem to="/" >Home</NavigationItem>
+         <NavigationItem to="/login">Login/SignUp</NavigationItem>
      </ul>
    </nav>
 	

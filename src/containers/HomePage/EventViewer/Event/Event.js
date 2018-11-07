@@ -3,7 +3,7 @@ import styles from './Event.module.css';
 
 /*Components*/
 import Closer from '../../../../UI/Closer/Closer';
-import ProfilePic from '../../../ProfilePic/ProfilePic';
+import ProfilePic from '../../../../components/ProfilePic/ProfilePic';
 import Button from '../../../../UI/Button/Button';
 
 /*data fetchers*/
@@ -29,12 +29,14 @@ class Event extends Component{
      //get the data from the server 
 		 axios.get(url)
 			 .then((response)=>{
-			 	//.log(response.data);
-			 	//save the story object inside the details state
+
+			 	
 			 	this.props.getDetails({
 			 		id: response.data.id,
 			 		title: response.data.title
 			 	});
+
+			 	//save the story object inside the details state
 			 	this.setState({details:response.data, loaded:true});
 			 })
 			 //come back

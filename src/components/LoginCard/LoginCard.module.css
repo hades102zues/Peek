@@ -1,0 +1,36 @@
+.LoginCard{
+	background-color: #fafafa;
+	border:none;
+	position:absolute;
+	z-index: 5;
+	top:20%;
+	left:50%;
+	transform: translateX(-50%);
+	border-radius: 4px;
+	width:40%;
+	text-align:center;
+	box-shadow:3px 7px 12px #263238 ;
+}
+
+.LoginCard h1{
+	margin: 25px 0;
+}
+
+
+@media all and (max-width: 940px){
+	.LoginCard{
+		width:50%;
+	}
+}
+
+@media all and (max-width: 740px){
+	.LoginCard{
+		width:55%;
+	}
+}
+
+@media all and (max-width: 450px){
+	.LoginCard{
+		width:60%;
+	}
+}
