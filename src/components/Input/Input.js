@@ -3,15 +3,33 @@ import styles from './Input.module.css';
 
 const input = (props) =>{
 	let output = null;
+
+	let classes = [];
+	classes.push(styles.Input);
+
+	if(!props.valid){
+		classes.push(styles.Invalid);
+	}
     
 	switch(props.inputtype){
 
 		case 'input':
-		  output=<input className={styles.Input} {...props.elementConfigs} />
+		  output=(<input
+		  			 value={props.value} 
+		  			 className={classes.join(' ')} 
+		  			 {...props.elementConfigs}
+		  			 onChange={props.change} 
+
+		  		/>);
 		  break;
 
 		default :
-		output=<input className={styles.Input} {...props.elementConfigs} />
+		output=(<input
+		  			 value={props.value} 
+		  			 className={classes.join(' ')} 
+		  			 {...props.elementConfigs}
+		  			 onChange={props.change}
+		  		/>);
 	}
 
 	return (
