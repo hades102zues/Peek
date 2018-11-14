@@ -12,7 +12,7 @@ class EventViewer extends Component{
   constructor(props){
   	super(props);
   	this.state={
-      totalIdsExpecting: 20,//total number of ids app will generate from
+      totalIdsExpecting: 50,//total number of ids app will generate from
   		storyIds:[],  //contains all story ids retrieved from sever
       eventDetails:[], //holds the title and id of each event within a {}
       totalEventDeatilsGot: 0, //counts the total amount of id-titles upon app initiation
@@ -31,7 +31,7 @@ class EventViewer extends Component{
 	axios.get('/newstories.json')
 	      //gets the id list and store it
 		 .then((response)=>{
-		 	idList=response.data.slice(0, this.state.totalIdsExpecting);//total of 20 ids
+		 	idList=response.data.slice(0, this.state.totalIdsExpecting);
 		 	this.setState({storyIds:idList});
 		 })
 		 .catch((error)=>console.log(error))
