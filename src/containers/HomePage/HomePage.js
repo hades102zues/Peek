@@ -4,18 +4,15 @@ import styles from './HomePage.module.css';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import Container from '../../Hoc/Container/Container';
 
+/*redux*/
+import { connect } from 'react-redux';
+
+/*actionCreators*/
+import * as actions from '../../store/actions/index';
 
 class HomePage extends Component{
  
-  constructor(props){
-  	super(props);
-  	this.state={
-  		searchInput:'', //holds what is captured in search bar
-  		isUserSearching: false, //specifies wheter user is searching
-      didUserBackspace: false, //specifies if the user had done a backspace
-  	  searchingCompleted: false //necessary to stop use from running matchfinder unecessarily and causing an infinite loop on render()
-    };
-  }
+
 
   //this function captures whats in the search bar
   onSearchInputHandler = (event) =>{
@@ -26,7 +23,7 @@ class HomePage extends Component{
     if (event.target.value.length) {
       isUserSearching= true;
 
-      if(this.state.searchingCompleted){
+      if(this.props.searchStatus){
         //console.log('Entering new search, searchingCompleted will go to false');
         this.searchingCompletedReseter ();
       }
@@ -38,36 +35,36 @@ class HomePage extends Component{
 
     
     //determines if user did a backspace
-    let didUserBackspace =  (event.target.value.length < this.state.searchInput.length) ? true : false;
-    //console.log('user backspaced?', didUserBackspace);
+    if((event.target.value.length < this.props.input.length)){
+        this.props.userBackspaced(true);
+    }
+   
 
     //search bar not empty
     if(isUserSearching){
-      this.setState({searchInput:event.target.value,
-    				   isUserSearching,
-               didUserBackspace
-
-    				});
+      this.props.onSearchInputed(event.target.value);
+      this.props.userSearching(isUserSearching);
     }
+
     //searchbar empty
-    else{//we should reset the searchInput to empty string since there is nothing in search bar
-      this.setState({searchInput:'',  
-               isUserSearching,
-               didUserBackspace: false
-            });
+    else{//we should reset our variables since nothing is in the search bar, once again
+      this.props.onSearchInputed('');
+      this.props.userSearching(isUserSearching);
+      this.props.userBackspaced(false);
+
     }
 
   }
 
   //function resets the state
   userBackspaceReset = () =>{
-    this.setState({didUserBackspace:!this.state.didUserBackspace});
+    this.props.userBackspaced(!this.props.backspace);
   }
 
   //
   searchingCompletedReseter = () =>{
     //console.log('searching completed searchingCompleted will reset to true');
-    this.setState({searchingCompleted: !this.state.searchingCompleted});
+    this.props.searchCompleted(!this.props.searchStatus);
   }
 
   render(){
@@ -77,13 +74,13 @@ class HomePage extends Component{
 		  <Container>
 			<SearchBar searching = {this.onSearchInputHandler}/>
 		    <EventViewer 
-		    	searchInput={this.state.searchInput}
-		    	isUserSearching={this.state.isUserSearching}
+		    	searchInput={this.props.input}
+		    	isUserSearching={this.props.isUserSearching}
 
-          searchingCompleted = {this.state.searchingCompleted}
+          searchingCompleted = {this.props.searchStatus}
           searchingCompletedReseter = {this.searchingCompletedReseter}
 
-          didUserBackspace={this.state.didUserBackspace}
+          didUserBackspace={this.props.backspace}
           userBackspaceReset={this.userBackspaceReset}
 		    />
 		  </Container>
@@ -95,6 +92,23 @@ class HomePage extends Component{
 }
 
 
+const mapStateToProps = state =>{
+  return {
+      input: state.homePage.searchInput,
+      backspace : state.homePage.didUserBackspace,
+      isUserSearching: state.homePage.isUserSearching,
+      searchStatus: state.homePage.searchingCompleted
+  };
+};
 
+const mapDispatchToProps = dispatch =>{
+  return {
+    onSearchInputed : (value)=> dispatch(actions.searchValueInputed(value)),
+    userSearching : (status)=> dispatch(actions.userIsSearching(status)),
+    userBackspaced : (status)=>dispatch(actions.backspaceOccured(status)),
+    searchCompleted: (status)=>dispatch(actions.searchStatusUpdate(status))
 
-export default HomePage;
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps )(HomePage);
