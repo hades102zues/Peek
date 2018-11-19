@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
 
+
+import * as actions from '../../store/actions/index';
 
 
 import Button from '../../UI/Button/Button';
@@ -22,7 +25,8 @@ class LoginForm extends Component{
 					validationRules:{
 						required:true
 					},
-					isValid: false
+					isValid: false,
+					touched:false
 
 				},
 				password: {
@@ -33,13 +37,16 @@ class LoginForm extends Component{
 					},
 					value:'',
 					validationRules:{
-						required:true
+						required:true,
+						length:6,
 					},
-					isValid: false
+					isValid: false,
+					touched:false
 				},
 				
 			},
-			isFormValid:false
+			isFormValid:false,
+			authState: 'login'
 		};
 	}
 
@@ -48,8 +55,16 @@ class LoginForm extends Component{
 
 		let isValid = false;
 
+		//in some cases some of inputs will not have such
+		//a rule and so it is obviously necessary to check that the rule exists befor we go
+		//to check if the requirement is met
+
 		if(rules.required){
 			isValid = value.trim() !== '';
+		}
+
+		if(rules.length){
+			isValid = value.length>=6 && isValid;
 		}
 
 		return isValid;
@@ -63,6 +78,7 @@ class LoginForm extends Component{
 
 		//store the value and validate the inputIdentifier
 		deepForm.value = event.target.value // value : x
+		deepForm.touched = true;
 		deepForm.isValid = this.checkValidity(event.target.value, deepForm.validationRules);
 		
 		//produce an uptodate form
@@ -80,6 +96,20 @@ class LoginForm extends Component{
 		this.setState({form, isFormValid});
 	}
 
+	formSubmitHandler = (event) =>{
+		event.preventDefault();
+		this.props.authenticate(
+			this.state.form.email.value,
+			this.state.form.password.value,
+			this.state.authState
+		);
+	};
+
+	authSwitchHandler = () =>{
+
+		const authState = this.state.authState==='login' ? 'signup' : 'login';
+		this.setState({authState});
+	};
 
 	render(){
 
@@ -91,10 +121,25 @@ class LoginForm extends Component{
 			formThings.push(key);
 		}
 
-		console.log(this.state);
-		return(
 
-		 <form className={styles.Form}>
+		let button = <Button disable={!this.state.isFormValid} name="Login"/>;
+
+		if(this.state.authState==='signup'){
+			button = <Button disable={!this.state.isFormValid} name="SignUp"/>;
+		}
+
+
+		let p = 'SignUp';
+		 
+		if (this.state.authState==='signup'){
+			p = 'Login';
+		}
+
+
+		//console.log(this.state);
+		return(
+		 <React.Fragment>
+		 <form className={styles.Form} onSubmit ={this.formSubmitHandler}>
 			  
 		 	  {
 		 	  	formThings.map(key=>(
@@ -105,14 +150,34 @@ class LoginForm extends Component{
 		 	  		  elementConfigs={{...form[key].elementConfig}}
 		 	  		  change={(event)=>{this.onInputChangeHandler(event, key)}}
 		 	  		  valid={form[key].isValid}
+		 	  		  wasTouched={form[key].touched}
 		 	  		/>
 		 	  	))
 		 	  }
-			  <Button disable={!this.state.isFormValid} name="Login"/>
+			  {button}
 		  </form>
+
+		  <p
+		  	style ={{
+		  		textDecoration:'underline',
+		  		cursor:'pointer'
+		  	}}
+
+		  	onClick= {this.authSwitchHandler}
+		  >
+		     {p}
+		  </p>
+		  
+		  </React.Fragment>
+		  
 		);
 	}
 }
 
+const mapDispatchToProps = dispatch =>{
+	return {
+		authenticate: (email, pass, authState)=> dispatch(actions.authenticateUser(email, pass, authState))
+	};
+};
 
-export default LoginForm;
+export default connect(null, mapDispatchToProps)(LoginForm);
