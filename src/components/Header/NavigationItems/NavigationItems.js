@@ -5,16 +5,30 @@ import styles from './NavigationItems.module.css';
 import React from 'react';
 import NavigationItem from '../NavigationItem/NavigationItem';
 
-const navigationItems = () => (
+const navigationItems = (props) => {
 
-   <nav className={styles.NavigationItems}>
-     <ul>
-         <NavigationItem to="/" >Home</NavigationItem>
-         <NavigationItem to="/login">Login/SignUp</NavigationItem>
-     </ul>
-   </nav>
+	let navLinks=[];
+	navLinks.push(<NavigationItem to="/login" >Login/SignUp</NavigationItem>);
+
+	if(props.userId){
+		navLinks=[];
+		navLinks.push(<NavigationItem to="/profile" >Profile</NavigationItem>);
+		navLinks.push(<NavigationItem to="/logout" >Logout</NavigationItem>);
+	}
 	
-);
+	return (
+		 <nav className={styles.NavigationItems}>
+		     <ul>
+		         <NavigationItem to="/">Home</NavigationItem>
+		         {navLinks}
+		     </ul>
+   		</nav>
+	);
+};
+
+
+	
+
 
 
 export default navigationItems;

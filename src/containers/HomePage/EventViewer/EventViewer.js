@@ -4,6 +4,10 @@ import styles from './EventViewer.module.css';
 import Event from './Event/Event';
 import axios from '../../../axios_instance/axios';
 
+import { connect } from 'react-redux';
+import * as actions from '../../../store/actions/index';
+
+
 
 
 class EventViewer extends Component{
@@ -12,41 +16,45 @@ class EventViewer extends Component{
   constructor(props){
   	super(props);
   	this.state={
-      totalIdsExpecting: 20,//total number of ids app will generate from
-  		storyIds:[],  //contains all story ids retrieved from sever
-      eventDetails:[], //holds the title and id of each event within a {}
+      totalIdsExpecting: 50,//total number of ids app will generate from
+      matchingTerms:[], // contains a list of event ids that might correspond to some event the user is looking for
       totalEventDeatilsGot: 0, //counts the total amount of id-titles upon app initiation
-      matchingTerms:[] // contains a list of event ids that might correspond to some event the user is looking for
-  	  
+      eventDetails:[], //holds the title and id of each event within a {}
     };
   }
   
 
   componentDidMount(){
-  	let idList=[];
+    console.log('mounted');
+    this.props.fetchIds(this.state.totalIdsExpecting);
 
 
-	//this gets a list of stories ids and then truncates them,
-	//then gets the stories for each id
-	axios.get('/newstories.json')
-	      //gets the id list and store it
-		 .then((response)=>{
-		 	idList=response.data.slice(0, this.state.totalIdsExpecting);//total of 20 ids
-		 	this.setState({storyIds:idList});
-		 })
-		 .catch((error)=>console.log(error))
-	 ;
+  	//this gets a list of stories ids and then truncates them,
+  	//then gets the stories for each id
+  	// axios.get('/newstories.json')
+  	//       //gets the id list and store it
+  	// 	 .then((response)=>{
+  	// 	 	idList=response.data.slice(0, this.state.totalIdsExpecting);
+  	// 	 	this.setState({storyIds:idList});
+  	// 	 })
+  	// 	 .catch((error)=>console.log(error))
+  	//  ;
+
   }
    
+
+
    //parameter is the Id of a specific story
    onCloserClickedHandler = (storyId) =>{
        //copy the state into a new array and filter out the incoming storyId
-      const currentStoryIds = [...this.state.storyIds]
+      const currentStoryIds = [...this.props.storyIds]
                         .filter((id)=>(
                             storyId!==id
                         ));
-      this.setState({storyIds : currentStoryIds});
+      this.props.storeIds(currentStoryIds);
+      //this.setState({storyIds : currentStoryIds});
   }
+
 
   //stores event details
   eventDetailsStorer = (details) =>{
@@ -170,7 +178,7 @@ class EventViewer extends Component{
 
   
   render(){
-  	const storyIds = [...this.state.storyIds];
+  	const storyIds = [...this.props.storyIds];
     const matchingTerms = [...this.state.matchingTerms];
     let finalOutput =  null; //this is what will be rendered
 
@@ -218,4 +226,19 @@ class EventViewer extends Component{
 	
 }
 
-export default EventViewer;
+const mapStateToProps = state =>{
+    return {
+      storyIds: state.eventViewer.storyIds
+    };
+};
+
+
+const mapDispatchToProps = dispatch =>{
+  return {
+    fetchIds: (idTotal)=>dispatch(actions.fetchIdsFromServer(idTotal)),
+    storeIds: (idList)=>dispatch(actions.storeIdsFromSever(idList))
+  };
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(EventViewer);
