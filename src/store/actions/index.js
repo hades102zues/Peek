@@ -9,3 +9,9 @@ export {
 	storeIdsFromSever,
 	fetchIdsFromServer
 } from './eventViewer';
+
+export {
+	authenticateUser,
+	logout,
+	checkAuthState
+} from './loginForm';

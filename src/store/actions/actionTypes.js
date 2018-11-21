@@ -5,3 +5,10 @@ export const SEARCH_STATUS_UPDATE='SEARCH_STATUS_UPDATE';
 
 
 export const STORE_IDS_FROM_SEVER = 'STORE_IDS_FROM_SEVER';
+
+export const AUTH_START = 'AUTH_START';
+export const AUTH_SUCCESS = 'AUTH_SUCCESS';
+export const AUTH_FAIL = 'AUTH_FAIL';
+export const AUTO_LOGOUT_USER = 'AUTO_LOGOUT_USER';
+
+export const LOGOUT = 'LOGOUT';

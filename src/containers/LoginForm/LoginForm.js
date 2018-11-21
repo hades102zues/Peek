@@ -9,6 +9,8 @@ import Button from '../../UI/Button/Button';
 import Input from '../../components/Input/Input';
 import styles from './LoginForm.module.css';
 
+import { Redirect } from 'react-router-dom';
+
 class LoginForm extends Component{
 
 	constructor(props){
@@ -136,43 +138,60 @@ class LoginForm extends Component{
 		}
 
 
-		//console.log(this.state);
+		let error=null;
+		if(this.props.error){
+			error=this.props.error.message;
+		}
+
+		console.log(this.props.userId);
+
 		return(
-		 <React.Fragment>
-		 <form className={styles.Form} onSubmit ={this.formSubmitHandler}>
-			  
-		 	  {
-		 	  	formThings.map(key=>(
-		 	  		<Input 
-		 	  		  value={form[key].value}
-		 	  		  key={key}
-		 	  		  inputtype={form[key].inputtype}
-		 	  		  elementConfigs={{...form[key].elementConfig}}
-		 	  		  change={(event)=>{this.onInputChangeHandler(event, key)}}
-		 	  		  valid={form[key].isValid}
-		 	  		  wasTouched={form[key].touched}
-		 	  		/>
-		 	  	))
-		 	  }
-			  {button}
-		  </form>
 
-		  <p
-		  	style ={{
-		  		textDecoration:'underline',
-		  		cursor:'pointer'
-		  	}}
+		    (this.props.userId) 
+		      ? <Redirect to ="/" />
+		      :  <React.Fragment>
+		      			<p style={{color:'red'}}>{error}</p>
+						 <form className={styles.Form} onSubmit ={this.formSubmitHandler}>
+							  
+						 	  {
+						 	  	formThings.map(key=>(
+						 	  		<Input 
+						 	  		  value={form[key].value}
+						 	  		  key={key}
+						 	  		  inputtype={form[key].inputtype}
+						 	  		  elementConfigs={{...form[key].elementConfig}}
+						 	  		  change={(event)=>{this.onInputChangeHandler(event, key)}}
+						 	  		  valid={form[key].isValid}
+						 	  		  wasTouched={form[key].touched}
+						 	  		/>
+						 	  	))
+						 	  }
+							  {button}
+						  </form> 
+				
 
-		  	onClick= {this.authSwitchHandler}
-		  >
-		     {p}
-		  </p>
-		  
-		  </React.Fragment>
-		  
+					  <p
+					  	style ={{
+					  		textDecoration:'underline',
+					  		cursor:'pointer'
+					  	}}
+
+					  	onClick= {this.authSwitchHandler}
+					  >
+					     {p}
+					  </p>
+		      	 </React.Fragment>
 		);
 	}
 }
+
+
+const mapStateToProps = state =>{
+	return {
+		error: state.loginForm.error,
+		userId: state.loginForm.userId
+	};
+};
 
 const mapDispatchToProps = dispatch =>{
 	return {
@@ -180,4 +199,4 @@ const mapDispatchToProps = dispatch =>{
 	};
 };
 
-export default connect(null, mapDispatchToProps)(LoginForm);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

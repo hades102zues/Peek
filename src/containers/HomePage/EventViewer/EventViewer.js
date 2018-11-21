@@ -2,7 +2,6 @@
 import React,{ Component }from 'react';
 import styles from './EventViewer.module.css';
 import Event from './Event/Event';
-import axios from '../../../axios_instance/axios';
 
 import { connect } from 'react-redux';
 import * as actions from '../../../store/actions/index';
