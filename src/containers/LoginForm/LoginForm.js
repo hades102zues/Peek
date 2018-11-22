@@ -143,7 +143,7 @@ class LoginForm extends Component{
 			error=this.props.error.message;
 		}
 
-		console.log(this.props.userId);
+		
 
 		return(
 

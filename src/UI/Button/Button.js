@@ -9,6 +9,7 @@ const button = (props)=>{
 		  className={styles.Button}
 		  style={{backgroundColor:props.color}}
 		  disabled={props.disable}
+		  onClick={()=>props.clicked(props.eventDetails)}
 		 >
 		{props.name}
 		</button>

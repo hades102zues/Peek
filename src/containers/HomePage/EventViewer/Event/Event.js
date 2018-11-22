@@ -86,7 +86,12 @@ class Event extends Component{
 		 		   	>
 		 		   	  <Button name="View"/>
 		 		   	</a>
-		 		   	<Button name="Add" color="#44a28a"/>
+		 		   	<Button 
+		 		   	      clicked={this.props.addClicked}
+		 		   	        name="Add" 
+		 		   	        color="#44a28a" 
+		 		   	        eventDetails={{...details}}
+		 		   	/>
 		 		   
 		 		   
 		       </div>

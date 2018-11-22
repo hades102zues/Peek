@@ -1,5 +1,6 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios_instance/axios';
+import axiosServer from 'axios';
 
 
 
@@ -30,3 +31,18 @@ export const fetchIdsFromServer = (totalIdsExpecting)=>{
 			 .catch((error)=>console.log(error));
 	};
 }
+
+
+//save story added by user to server
+export const saveUserEvent = (record, userId) => dispatch=> {
+	console.log(record);
+
+	axiosServer.patch(`https://peek-5bc2a.firebaseio.com/${userId}/events/${record.eventId}.json`, {
+		title: record.title,
+		url: record.url,
+		user: record.by
+	})
+	.then( response =>{console.log(response.data)})
+	.catch(err =>{console.log(err)});
+
+};

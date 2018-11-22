@@ -7,7 +7,8 @@ export {
 
 export {
 	storeIdsFromSever,
-	fetchIdsFromServer
+	fetchIdsFromServer,
+	saveUserEvent
 } from './eventViewer';
 
 export {

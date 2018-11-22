@@ -12,3 +12,5 @@ export const AUTH_FAIL = 'AUTH_FAIL';
 export const AUTO_LOGOUT_USER = 'AUTO_LOGOUT_USER';
 
 export const LOGOUT = 'LOGOUT';
+
+export const SAVE_USER_EVENT= 'SAVE_USER_EVENT';

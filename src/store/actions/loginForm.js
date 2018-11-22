@@ -42,7 +42,7 @@ export const logout = () =>{
 
 //this function is used to auto logout the user
   export const autoLogoutUser = (expirationTime)=>{
-    
+
     return dispatch => {
       setInterval(()=>{dispatch(logout())}, expirationTime);
     };
@@ -110,7 +110,8 @@ export const checkAuthState = ()=>{
             }
             else{
               
-              const newExpirationTime= expirationDate.getSeconds() - new Date().getSeconds();
+              
+              const newExpirationTime= expirationDate.getTime() - (new Date().getTime());
               
               //log in
               dispatch( authSuccess(localStorage.getItem('userId'), 
@@ -120,8 +121,8 @@ export const checkAuthState = ()=>{
                ));
 
 
-              // //reset the auto logout              
-              // dispatch(autoLogoutUser(newExpirationTime*1000));
+              //reset the auto logout              
+              dispatch(autoLogoutUser(newExpirationTime));
             }
 
         }
