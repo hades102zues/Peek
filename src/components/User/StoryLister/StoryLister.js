@@ -12,22 +12,38 @@ class StoryLister extends Component{
 
 	componentDidMount(){
 		//if the user is authenticated
-		if(this.props.userId){
-			this.props.getStories(this.props.userId);
+		if(localStorage.getItem('userId')){
+			this.props.getStories(localStorage.getItem('userId'));
 		}
 	}
 
 
+
+
+
+
 	render(){
+		let stories=null;
+
+		if(this.props.stories){
+			stories = this.props.stories.map( storyObject=>{
+			return <Story 
+						key={storyObject.id}
+						title={storyObject.title}
+						url={storyObject.url}
+			 		/>;
+		    });
+		}
+
+
+		if (this.props.isLoading){
+			stories = <p>Loading....</p>
+		}
+
+
 		return(
 		<div className={styles.StoryLister}>
-		  <Story 
-		  	url
-		  	title
-		  />
-		  <Story />
-		  <Story />
-		  <Story />
+		  {stories}
 		</div>
 		
 		);
@@ -37,7 +53,10 @@ class StoryLister extends Component{
 
 const mapStateToProps = state =>{
 	return {
-		userId: state.loginForm.userId
+		userId: state.loginForm.userId,
+		stories: state.storyLister.userStories,
+		error: state.storyLister.error,
+		isLoading: state.storyLister.loading !== false
 	};
 };
 

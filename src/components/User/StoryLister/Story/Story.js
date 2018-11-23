@@ -4,9 +4,9 @@ import styles from './Story.module.css';
 const story = (props) =>{
 	return (
 		
-		<a href="#" style={{textDecoration:'none'}}>
+		<a href={props.url} target="_blank" rel="noopener noreferrer" style={{textDecoration:'none'}}>
 		  <div className={styles.Story}>	
-			<p>BLAH ABBAA everyday</p> 
+			<p>{props.title}</p> 
 		  </div>
 		</a>
 		
