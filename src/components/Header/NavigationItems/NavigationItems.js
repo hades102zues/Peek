@@ -12,8 +12,8 @@ const navigationItems = (props) => {
 
 	if(props.userId){
 		navLinks=[];
-		navLinks.push(<NavigationItem to="/profile" >Profile</NavigationItem>);
-		navLinks.push(<NavigationItem to="/logout" >Logout</NavigationItem>);
+		navLinks.push(<NavigationItem key="Profile" to="/profile" >Profile</NavigationItem>);
+		navLinks.push(<NavigationItem key="Logout" to="/logout" >Logout</NavigationItem>);
 	}
 	
 	return (

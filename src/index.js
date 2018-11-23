@@ -15,11 +15,13 @@ import thunk from 'redux-thunk';
 import homePageReducer from './store/reducers/homePage';
 import eventViewerReducer from './store/reducers/eventViewer';
 import loginFormReducer from './store/reducers/loginForm';
+import storyListerReducer from './store/reducers/storyLister';
 
 const rootReducer = combineReducers({
 	homePage: homePageReducer,
 	eventViewer: eventViewerReducer,
-	loginForm: loginFormReducer
+	loginForm: loginFormReducer,
+	storyLister: storyListerReducer
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

@@ -16,3 +16,7 @@ export {
 	logout,
 	checkAuthState
 } from './loginForm';
+
+export {
+	getUserStoriesFromServer
+} from './storyLister';

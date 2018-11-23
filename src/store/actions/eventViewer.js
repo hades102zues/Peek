@@ -35,14 +35,15 @@ export const fetchIdsFromServer = (totalIdsExpecting)=>{
 
 //save story added by user to server
 export const saveUserEvent = (record, userId) => dispatch=> {
-	console.log(record);
 
+console.log(record);
 	axiosServer.patch(`https://peek-5bc2a.firebaseio.com/${userId}/events/${record.eventId}.json`, {
 		title: record.title,
 		url: record.url,
-		user: record.by
+		user:record.user
+		
 	})
-	.then( response =>{console.log(response.data)})
+	.then( response =>{console.log('success')})
 	.catch(err =>{console.log(err)});
 
 };

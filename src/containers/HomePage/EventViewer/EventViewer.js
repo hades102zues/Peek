@@ -163,14 +163,15 @@ class EventViewer extends Component{
   }
 
   addEventToServerHandler = (eventDetails) =>{
-    
-    const serverRecord = {
-      eventId:eventDetails.id,
-      title:eventDetails.title,
-      url:eventDetails.url,
-      user: eventDetails.by
-    };
-    this.props.storeEvent(serverRecord, this.props.userId);
+    if(this.props.userId){
+        const serverRecord = {
+          eventId:eventDetails.id,
+          title:eventDetails.title,
+          url:eventDetails.url,
+          user: eventDetails.by
+       };
+        this.props.storeEvent(serverRecord, this.props.userId);
+    }
   };
   
   render(){
@@ -184,7 +185,7 @@ class EventViewer extends Component{
                   storyId={id} 
                   closerClicked = {this.onCloserClickedHandler}
                   getDetails = {this.eventDetailsStorer}
-                  addClicked = {this.addEventToServerHandler}
+                  clicked = {this.addEventToServerHandler}
             />
     ));
 

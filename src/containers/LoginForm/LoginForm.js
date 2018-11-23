@@ -124,10 +124,10 @@ class LoginForm extends Component{
 		}
 
 
-		let button = <Button disable={!this.state.isFormValid} name="Login"/>;
+		let button = <Button disable={!this.state.isFormValid} name="Login" click={(l)=>{}}/>;
 
 		if(this.state.authState==='signup'){
-			button = <Button disable={!this.state.isFormValid} name="SignUp"/>;
+			button = <Button disable={!this.state.isFormValid} name="SignUp" click={(l)=>{}}/>;
 		}
 
 

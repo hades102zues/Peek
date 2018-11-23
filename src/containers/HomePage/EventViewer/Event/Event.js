@@ -12,8 +12,8 @@ import axios from '../../../../axios_instance/axios.js';
 
 class Event extends Component{
  
-    constructor(props){
-    	super(props);
+    constructor(){
+    	super();
     	this.state={
     		details:{}, //houses the info from the server
     		loaded:false //specifies that the data came back
@@ -84,10 +84,11 @@ class Event extends Component{
 		 		   	   target="_blank"
 		 		   	   rel="noopener noreferrer"
 		 		   	>
-		 		   	  <Button name="View"/>
+		 		   	  <Button name="View" click={(l)=>{}}/>
 		 		   	</a>
+		 		   	
 		 		   	<Button 
-		 		   	      clicked={this.props.addClicked}
+		 		   	        click={this.props.clicked}
 		 		   	        name="Add" 
 		 		   	        color="#44a28a" 
 		 		   	        eventDetails={{...details}}

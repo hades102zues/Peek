@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import { Route, withRouter } from 'react-router-dom';
+import { Route, withRouter, Switch } from 'react-router-dom';
 import { connect } from 'react-redux'; 
 
 
@@ -9,6 +9,7 @@ import Layout from './Hoc/Layout/Layout.js';
 import HomePage from './containers/HomePage/HomePage';
 import Login from './components/Login/Login';
 import LogoutPage from './components/LogoutPage/LogoutPage';
+import UserPage from './components/User/User';
 
 import { checkAuthState } from './store/actions/index';
 
@@ -25,9 +26,12 @@ class App extends Component {
   render() {
     return (
 	       <Layout> 
+	       	<Switch>
 	          <Route path="/" exact component={HomePage} />
 	          <Route path="/login" component={Login} />
+	          <Route path= "/profile" component={UserPage}/>
 	          <Route path="/logout" component={LogoutPage}/>
+	        </Switch>
 	       </Layout>
     );
   }
