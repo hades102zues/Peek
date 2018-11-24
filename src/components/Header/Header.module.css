@@ -8,4 +8,10 @@
 	
 }
 
+@media all and (min-height: 1000px){
+	.Header{
+		height:5vh;
+	}
+}
+
 
