@@ -7,5 +7,16 @@ export {
 
 export {
 	storeIdsFromSever,
-	fetchIdsFromServer
+	fetchIdsFromServer,
+	saveUserEvent
 } from './eventViewer';
+
+export {
+	authenticateUser,
+	logout,
+	checkAuthState
+} from './loginForm';
+
+export {
+	getUserStoriesFromServer
+} from './storyLister';

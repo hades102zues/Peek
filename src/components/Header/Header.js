@@ -1,25 +1,31 @@
 /*This provides the site's header*/
 
-import React from 'react';
+import React,{ Component } from 'react';
 import styles from './Header.module.css';
-import Container from '../../Hoc/Container/Container';
 import NavigationItems from './NavigationItems/NavigationItems';
-//import NavigationItemsL from './NavigationItemsL/NavigationItemsL';
+
+import { withRouter } from 'react-router-dom';
 
 
-
-const header = () => {
-	return (
-		<header className={styles.Header}>
-			<Container>
-				
-				<NavigationItems/>
-			</Container>
-				
-		</header>
-	);
-}
+import { connect } from 'react-redux';
 
 
+class Header extends Component{
 
-export default header;
+	render(){
+		return (
+			<header className={styles.Header}>
+					<NavigationItems userId={this.props.userId}/>					
+			</header>
+		);
+	}
+} 
+
+
+const mapStateToProps = state =>{
+	return {
+		userId: state.loginForm.userId
+	};
+};
+
+export default withRouter(connect(mapStateToProps)(Header));

@@ -2,7 +2,6 @@
 import React,{ Component }from 'react';
 import styles from './EventViewer.module.css';
 import Event from './Event/Event';
-import axios from '../../../axios_instance/axios';
 
 import { connect } from 'react-redux';
 import * as actions from '../../../store/actions/index';
@@ -25,20 +24,9 @@ class EventViewer extends Component{
   
 
   componentDidMount(){
-    console.log('mounted');
+    
     this.props.fetchIds(this.state.totalIdsExpecting);
 
-
-  	//this gets a list of stories ids and then truncates them,
-  	//then gets the stories for each id
-  	// axios.get('/newstories.json')
-  	//       //gets the id list and store it
-  	// 	 .then((response)=>{
-  	// 	 	idList=response.data.slice(0, this.state.totalIdsExpecting);
-  	// 	 	this.setState({storyIds:idList});
-  	// 	 })
-  	// 	 .catch((error)=>console.log(error))
-  	//  ;
 
   }
    
@@ -141,12 +129,10 @@ class EventViewer extends Component{
 
    
     
-    // console.log('matchingTerms', matchingTerms);
-    // console.log('currentTerms in state', this.state.matchingTerms);
-    // console.log('are arrays same:', this.isArraysTheSame(matchingTerms));
+    
     
     if(this.props.didUserBackspace){
-      // console.log('updating cause user backspace');
+      
       this.props.userBackspaceReset();
       this.setState({matchingTerms});
       return;
@@ -154,12 +140,12 @@ class EventViewer extends Component{
 
     //if user enters new search term or did then update
     if(!this.isArraysTheSame(matchingTerms, stateArr)){
-      // console.log('STATE UPDATED');
+      
        this.setState({matchingTerms});
-       // console.log('backspace', this.props.didUserBackspace );
+       
      }
 
-     // console.log('Completed search so going true');
+     
      this.props.searchingCompletedReseter();
 
   }
@@ -176,6 +162,17 @@ class EventViewer extends Component{
     
   }
 
+  addEventToServerHandler = (eventDetails) =>{
+    if(this.props.userId){
+        const serverRecord = {
+          eventId:eventDetails.id,
+          title:eventDetails.title,
+          url:eventDetails.url,
+          user: eventDetails.by
+       };
+        this.props.storeEvent(serverRecord, this.props.userId);
+    }
+  };
   
   render(){
   	const storyIds = [...this.props.storyIds];
@@ -188,10 +185,11 @@ class EventViewer extends Component{
                   storyId={id} 
                   closerClicked = {this.onCloserClickedHandler}
                   getDetails = {this.eventDetailsStorer}
+                  clicked = {this.addEventToServerHandler}
             />
     ));
 
-    //console.log('render', this.state.totalEventDeatilsGot);
+    
 
     //this ensures that only those events that are relevant to search
     //criteria are displayed
@@ -228,7 +226,8 @@ class EventViewer extends Component{
 
 const mapStateToProps = state =>{
     return {
-      storyIds: state.eventViewer.storyIds
+      storyIds: state.eventViewer.storyIds,
+      userId: state.loginForm.userId
     };
 };
 
@@ -236,7 +235,8 @@ const mapStateToProps = state =>{
 const mapDispatchToProps = dispatch =>{
   return {
     fetchIds: (idTotal)=>dispatch(actions.fetchIdsFromServer(idTotal)),
-    storeIds: (idList)=>dispatch(actions.storeIdsFromSever(idList))
+    storeIds: (idList)=>dispatch(actions.storeIdsFromSever(idList)),
+    storeEvent: (serverRecord, user) => dispatch(actions.saveUserEvent(serverRecord, user))
   };
 };
 

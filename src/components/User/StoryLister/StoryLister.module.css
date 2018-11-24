@@ -1,0 +1,7 @@
+.StoryLister{
+
+	background-color: #2980b9;
+	padding-top: 25px;
+	height: 82vh;
+	overflow-y: scroll;
+}

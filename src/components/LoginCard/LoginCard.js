@@ -9,7 +9,7 @@ import LoginForm from '../../containers/LoginForm/LoginForm';
 
 const loginCard = () =>(
 	<div className={styles.LoginCard}>
-		  <h1>Sign In</h1>
+		  <h1>Portal</h1>
 		  <LoginForm/>
 	</div>
 );
