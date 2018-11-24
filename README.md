@@ -7,6 +7,6 @@ A new user can sign up for an account by hitting the SignUp phrase found below t
 
 It is possible to search through the news feed for specific key phrases on the Home Page via the search bar.
 
-The Application was Built with React
-Backend Authentication and Data storage is handled by FireBase
-The news feed is provided through Hacker News' API
+The Application was Built with React,
+backend authentication and data storage is handled by FireBase and 
+the news feed is provided through Hacker News' API
