@@ -3,11 +3,12 @@
 	border-radius:5px;
 	background-color: #fafafa;
 	border:1px solid #f8f9fa;
-	width: 50%;
+	width: 55%;
 	box-shadow:3px 7px 12px #263238 ;
 	margin: 0 auto 35px auto;
 }
 
-.Story p {
+.Story h5 {
 	font-size: 20px;
+	color: #547490;
 }

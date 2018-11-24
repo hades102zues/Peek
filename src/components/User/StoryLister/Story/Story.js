@@ -6,7 +6,7 @@ const story = (props) =>{
 		
 		<a href={props.url} target="_blank" rel="noopener noreferrer" style={{textDecoration:'none'}}>
 		  <div className={styles.Story}>	
-			<p>{props.title}</p> 
+			<h5>{props.title}</h5> 
 		  </div>
 		</a>
 		
