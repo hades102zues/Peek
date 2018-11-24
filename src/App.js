@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import { Route, withRouter, Switch } from 'react-router-dom';
+import { Route, withRouter, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux'; 
 
 
@@ -24,23 +24,39 @@ class App extends Component {
 
 
   render() {
+	  	let routes = 
+	  	  <Switch>
+		    <Route path="/login" component={Login} />
+		    <Route path="/" exact component={HomePage} />
+		    <Redirect to="/"/>
+		  </Switch>;
+
+		if(this.props.isUserAuthenticated){
+			routes=<Switch>
+				      <Route path= "/profile" component={UserPage}/>
+				      <Route path="/logout" component={LogoutPage}/>
+				      <Route path="/" exact component={HomePage} />
+				      <Redirect to="/" />
+		    	   </Switch>;
+		}
+
     return (
 	       <Layout> 
-	       	<Switch>
-	          <Route path="/" exact component={HomePage} />
-	          <Route path="/login" component={Login} />
-	          <Route path= "/profile" component={UserPage}/>
-	          <Route path="/logout" component={LogoutPage}/>
-	        </Switch>
+	       	{routes}
 	       </Layout>
     );
   }
 }
 
+const mapStateToProps = state =>{
+	return{
+		isUserAuthenticated: state.loginForm.userId !== null
+	};
+};
 
 const mapDispatchToProps = dispatch =>{
 	return {
 		localAuthCheck: ()=> dispatch(checkAuthState())
 	};
 };
-export default withRouter(connect(null, mapDispatchToProps)(App));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
