@@ -26,5 +26,18 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "description": "An Event viewer app",
+  "main": "attemptCode.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hades102zues/Peek.git"
+  },
+  "author": "Joshua Wiggins",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hades102zues/Peek/issues"
+  },
+  "homepage": "https://peek-5bc2a.firebaseapp.com/"
 }
