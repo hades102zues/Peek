@@ -28,7 +28,7 @@ class App extends Component {
 	  	  <Switch>
 		    <Route path="/login" component={Login} />
 		    <Route path="/" exact component={HomePage} />
-		    <Redirect to="/"/>
+		    <Redirect to="/" />
 		  </Switch>;
 
 		if(this.props.isUserAuthenticated){
@@ -36,7 +36,9 @@ class App extends Component {
 				      <Route path= "/profile" component={UserPage}/>
 				      <Route path="/logout" component={LogoutPage}/>
 				      <Route path="/" exact component={HomePage} />
+				      <Route path="/login" component={Login} />
 				      <Redirect to="/" />
+				      
 		    	   </Switch>;
 		}
 
